@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Log</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="introPage">
+    <div class="intro-bg" aria-hidden="true">
+      <div class="intro-photo p1"></div>
+      <div class="intro-photo p2"></div>
+      <div class="intro-photo p3"></div>
+      <div class="intro-photo p4"></div>
+      <div class="intro-scrim"></div>
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+    </div>
+    <div class="intro-content">
+      <div class="intro-split">
+        <div class="intro-left">
+          <div class="intro-eyebrow">PERSONAL EXPLORATION JOURNAL</div>
+          <h1 class="intro-title">Notice something worth remembering?</h1>
+          <p class="intro-lede">Field Log helps you keep a personal record of the places, discoveries and little
+            details you encounter while exploring.</p>
+
+          <div class="intro-steps-compact" id="discoveryTrailWrap">
+            <svg class="discovery-trail" id="discoveryTrailSvg" aria-hidden="true" focusable="false">
+              <path class="discovery-trail-bg" id="discoveryTrailBg" />
+              <path class="discovery-trail-fg" id="discoveryTrailFg" />
+              <circle class="discovery-trail-dot" id="discoveryTrailDot" r="3.2" />
+            </svg>
+            <div class="step-chip">
+              <span class="step-chip-num">01</span>
+              <div><span class="step-chip-title">NOTICE</span><span class="step-chip-desc">Find something interesting while you're out.</span></div>
+            </div>
+            <div class="step-chip">
+              <span class="step-chip-num">02</span>
+              <div><span class="step-chip-title">RECORD</span><span class="step-chip-desc">Give it a name, add a note, and save where you found it.</span></div>
+            </div>
+            <div class="step-chip">
+              <span class="step-chip-num">03</span>
+              <div><span class="step-chip-title">REMEMBER</span><span class="step-chip-desc">Come back later and rediscover what you've saved.</span></div>
+            </div>
+          </div>
+
+          <p class="intro-desc-short">Field Log gives you a calm, quiet notebook for the world around you — pin
+            discoveries as you wander, and let your map naturally turn into a visual diary of everywhere you've been.</p>
+
+          <button class="btn-primary intro-cta" id="enterAppBtn">Start Exploring →</button>
+          <p class="intro-note">Notice · Record · Remember — Keep your discoveries safe in your browser.</p>
+          <p class="intro-author">Created by <strong>Rudra Upadhyay</strong></p>
+        </div>
+
+        <div class="intro-right">
+          <div class="tile-grid">
+            <div class="tile reveal-tile" data-category="Interesting Place" tabindex="0" role="button"
+              style="--tile-color:#B5541F; --tile-photo:url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">✦</span><span class="tile-label">Interesting Place</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Nature" tabindex="0" role="button"
+              style="--tile-color:#4B6B3A; --tile-photo:url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">✤</span><span class="tile-label">Nature</span>
+            </div>
+            <div class="tile reveal-tile" data-category="History &amp; Culture" tabindex="0" role="button"
+              style="--tile-color:#5C4A7A; --tile-photo:url('https://images.unsplash.com/photo-1548625361-12503521b949?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">♦</span><span class="tile-label">History &amp; Culture</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Food &amp; Drink" tabindex="0" role="button"
+              style="--tile-color:#C86D2A; --tile-photo:url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">☕</span><span class="tile-label">Food &amp; Drink</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Photo Spot" tabindex="0" role="button"
+              style="--tile-color:#2F6690; --tile-photo:url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">📷</span><span class="tile-label">Photo Spot</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Adventure" tabindex="0" role="button"
+              style="--tile-color:#3B5B6B; --tile-photo:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">▲</span><span class="tile-label">Adventure</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Favourite" tabindex="0" role="button"
+              style="--tile-color:#C24D3D; --tile-photo:url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">♥</span><span class="tile-label">Favourite</span>
+            </div>
+            <div class="tile reveal-tile" data-category="Want to Revisit" tabindex="0" role="button"
+              style="--tile-color:#8C6D1F; --tile-photo:url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&amp;fit=crop&amp;w=400&amp;q=60');">
+              <span class="tile-glyph">⚐</span><span class="tile-label">Want to Revisit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="categoryPage" class="app-hidden">
+    <div class="cat-wrap">
+      <div class="cat-header">
+        <button class="btn-secondary cat-back" id="catBackBtn">← Back</button>
+        <button class="btn-primary cat-enter" id="catEnterAppBtn">Start Exploring →</button>
+      </div>
+      <div class="cat-hero" id="catHero">
+        <span class="cat-hero-glyph" id="catGlyph"></span>
+        <h1 id="catTitle"></h1>
+      </div>
+      <p class="cat-desc" id="catDesc"></p>
+      <div class="cat-history">
+        <div class="cat-history-lbl">SAVED DISCOVERIES IN THIS CATEGORY — <span id="catCount">0</span></div>
+        <div id="catEntryList"></div>
+        <p id="catEmptyMsg" style="display:none;">No discoveries saved in this category yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="appRoot" class="app-hidden">
+    <div class="wrap">
+
+      <div class="titleblock">
+        <div>
+          <h1>Field Log</h1>
+          <p class="sub">Your collection of places, moments and discoveries. · <a href="#" id="viewIntroLink"
+              class="view-intro-link">About Field Log</a></p>
+        </div>
+        <svg class="compass" width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="23" fill="none" stroke="#2E2A22" stroke-width="1.5" />
+          <polygon points="26,7 30,26 26,45 22,26" fill="#B5541F" />
+          <polygon points="26,7 30,26 26,26 22,26" fill="#2E2A22" />
+          <text x="26" y="16" font-family="Arial" font-size="7" fill="#2E2A22" text-anchor="middle"
+            font-weight="bold">N</text>
+        </svg>
+      </div>
+
+      <div class="app-columns">
+        <div class="app-col-primary">
+
+      <div id="mapCard" class="reveal">
+        <div class="maplbl">
+          <div>
+            <span class="map-title-main">MY DISCOVERIES</span>
+            <span class="map-subtitle">Places and moments you've saved while exploring.</span>
+          </div>
+          <button class="iconbtn" id="fullscreenBtn" type="button" title="Toggle Fullscreen">⛶</button>
+        </div>
+        <div class="map-pin-cue">
+          <span class="map-pin-cue-icon">📍</span> Every pin is a memory worth keeping.
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <div id="analyticsCard" class="reveal">
+        <div class="maplbl">
+          <div>
+            <span class="map-title-main">MY EXPLORATION</span>
+            <span class="map-subtitle">A little look at the places and discoveries you've collected.</span>
+          </div>
+          <span class="analytics-scope-note" id="analyticsScopeNote">Showing: All Discoveries</span>
+        </div>
+
+        <div class="analytics-toolbar">
+          <div class="analytics-toolbar-group">
+            <span class="analytics-toolbar-lbl">Show:</span>
+            <div class="analytics-scope-toggle" id="analyticsScopeToggle">
+              <button type="button" class="analytics-scope-btn active" data-scope="all">All discoveries</button>
+              <button type="button" class="analytics-scope-btn" data-scope="filtered">Just what's showing</button>
+            </div>
+          </div>
+          <div class="analytics-toolbar-group">
+            <span class="analytics-toolbar-lbl">Group by:</span>
+            <div class="analytics-time-toggle" id="analyticsTimeToggle">
+              <button type="button" class="analytics-time-btn active" data-group="daily">By day</button>
+              <button type="button" class="analytics-time-btn" data-group="monthly">By month</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="analytics-overview" id="analyticsOverview">
+          <div class="stat mini">
+            <span class="stat-mini-icon">🧭</span>
+            <div class="num" id="anaTotal">0</div>
+            <div class="lbl">Discoveries</div>
+          </div>
+          <div class="stat mini">
+            <span class="stat-mini-icon">📍</span>
+            <div class="num" id="anaLocations">0</div>
+            <div class="lbl">Places Explored</div>
+          </div>
+          <div class="stat mini">
+            <span class="stat-mini-icon">⚐</span>
+            <div class="num" id="anaRevisit">0</div>
+            <div class="lbl">Want to Revisit</div>
+          </div>
+          <div class="stat mini">
+            <span class="stat-mini-icon">♥</span>
+            <div class="num" id="anaFavourites">0</div>
+            <div class="lbl">Favourite Spots</div>
+          </div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="analytics-section-lbl">What I Discover</div>
+          <p class="analytics-section-sub">The kinds of things that have caught your attention. <span
+              class="analytics-hint">(click one to filter)</span></p>
+          <div id="analyticsCategoryChart" class="cat-chart"></div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="analytics-section-lbl">When I Explore</div>
+          <p class="analytics-section-sub">The rhythm of your discoveries over time.</p>
+          <div id="analyticsTimeChart" class="time-chart"></div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="analytics-section-lbl">Where I Explore</div>
+          <p class="analytics-section-sub">The places your discoveries have taken you.</p>
+          <div class="geo-grid" id="analyticsGeoGrid"></div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="analytics-section-lbl">Places to Revisit</div>
+          <p class="analytics-section-sub">A few discoveries you've marked for another visit.</p>
+          <div id="analyticsRevisitList" class="analytics-mini-list"></div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="analytics-section-lbl">Favourite Discoveries</div>
+          <p class="analytics-section-sub">The places and moments you've chosen to keep close.</p>
+          <div id="analyticsFavouritesList" class="analytics-mini-list"></div>
+        </div>
+      </div>
+
+      <div class="form-card reveal">
+        <h2 id="formTitle">Add Discovery</h2>
+        <p class="form-subtitle">Save something you want to remember.</p>
+
+        <div class="form-block">
+          <label for="siteName" class="form-block-label">What did you discover?</label>
+          <input type="text" id="siteName" class="discovery-name-input" placeholder="Give it a name...">
+          <p class="field-error" id="nameError" style="display:none;">Give your discovery a name first.</p>
+        </div>
+
+        <div class="form-block">
+          <label class="form-block-label">What kind of discovery is it?</label>
+          <select id="category" style="display:none;">
+            <option>Interesting Place</option>
+            <option>Nature</option>
+            <option>History &amp; Culture</option>
+            <option>Food &amp; Drink</option>
+            <option>Photo Spot</option>
+            <option>Adventure</option>
+            <option>Favourite</option>
+            <option>Want to Revisit</option>
+            <option>Other</option>
+          </select>
+          <div class="chip-grid" id="categoryChips"></div>
+          <p class="field-error" id="categoryError" style="display:none;">Choose what kind of discovery this is.</p>
+        </div>
+
+        <div class="form-block">
+          <label for="notes" class="form-block-label">Why is this worth remembering?</label>
+          <textarea id="notes"
+            placeholder="What caught your attention? Add a thought, detail, memory, or reason you saved this..."></textarea>
+        </div>
+
+        <div class="form-block">
+          <label class="form-block-label">Where did you find it?</label>
+          <div class="location-controls">
+            <button type="button" class="btn-secondary" id="pickOnMapBtn">Pick on map</button>
+            <button type="button" class="btn-secondary" id="useMyLocationBtn">Use my location</button>
+          </div>
+          <div class="location-status" id="locationStatus">
+            <span class="location-status-dot"></span>
+            <span id="locationStatusText">No location selected yet</span>
+          </div>
+          <div class="coords-subtle" id="coordsSubtle" style="display:none;"></div>
+          <details class="coords-manual">
+            <summary>Fine-tune coordinates manually</summary>
+            <div class="form-row">
+              <div>
+                <label for="lat">Latitude</label>
+                <input type="number" id="lat" step="any" placeholder="e.g. 12.9352">
+              </div>
+              <div>
+                <label for="lng">Longitude</label>
+                <input type="number" id="lng" step="any" placeholder="e.g. 77.6146">
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <div class="form-block">
+          <label class="form-block-label">Preview</label>
+          <div class="discovery-preview" id="discoveryPreview">
+            <div class="preview-empty" id="previewEmpty">Start filling in the details above to see a preview here.</div>
+            <div class="preview-card" id="previewCard" style="display:none;">
+              <div class="preview-top">
+                <span class="preview-glyph" id="previewGlyph"></span>
+                <div>
+                  <div class="preview-name" id="previewName"></div>
+                  <div class="preview-cat" id="previewCat"></div>
+                </div>
+              </div>
+              <div class="preview-note" id="previewNote"></div>
+              <div class="preview-loc" id="previewLoc">📍 No location selected yet</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="saveBtn">Save Discovery</button>
+        <button class="btn-secondary" id="cancelEditBtn" style="display:none;">Cancel</button>
+      </div>
+
+        </div>
+
+        <div class="app-col-list">
+
+      <div class="toolbar reveal">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input type="text" id="searchBox" placeholder="Search your discoveries..." aria-label="Find a discovery">
+          <button type="button" class="search-clear" id="searchClearBtn" aria-label="Clear search" style="display:none;">✕</button>
+        </div>
+        <select id="filterCat" aria-label="Filter by category">
+          <option value="">All Discoveries</option>
+          <option>Interesting Place</option>
+          <option>Nature</option>
+          <option>History &amp; Culture</option>
+          <option>Food &amp; Drink</option>
+          <option>Photo Spot</option>
+          <option>Adventure</option>
+          <option>Favourite</option>
+          <option>Want to Revisit</option>
+          <option>Other</option>
+        </select>
+        <select id="sortBy" aria-label="Sort discoveries">
+          <option value="date">Newest discoveries</option>
+          <option value="dateAsc">Oldest discoveries</option>
+          <option value="name">A–Z</option>
+          <option value="nameDesc">Z–A</option>
+          <option value="category">By category</option>
+        </select>
+        <button class="iconbtn" id="exportBtn">Export Journal</button>
+        <button class="iconbtn" id="importBtn">Import Journal</button>
+        <input type="file" id="importFile" accept=".csv">
+        <button class="iconbtn" id="compareBtn">⇄ Compare Places</button>
+      </div>
+
+      <div class="quick-filters">
+        <button type="button" class="quick-filter-pill" id="favouriteFilterBtn" aria-pressed="false">
+          <span aria-hidden="true">♥</span> Favourite
+        </button>
+        <button type="button" class="quick-filter-pill" id="revisitFilterBtn" aria-pressed="false">
+          <span aria-hidden="true">⚐</span> Want to Revisit
+        </button>
+        <button type="button" class="clear-filters-btn" id="clearFiltersBtn" style="display:none;">Clear all filters</button>
+      </div>
+
+      <div class="collection-header">
+        <div>
+          <h3 id="collectionTitle">My Discoveries</h3>
+          <p id="collectionSubtitle">The places, moments and little details you've saved.</p>
+        </div>
+        <span class="results-count" id="resultsCount"></span>
+      </div>
+
+      <div id="entryList"></div>
+      <div id="emptyMsg"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="detailOverlay" class="app-hidden"></div>
+  <div id="detailPanel" class="app-hidden" role="dialog" aria-modal="true" aria-labelledby="detailName">
+    <div class="detail-header">
+      <span class="detail-glyph" id="detailGlyph"></span>
+      <div class="detail-header-text">
+        <h2 id="detailName"></h2>
+        <span class="detail-badge" id="detailBadge"></span>
+      </div>
+      <button class="detail-close" id="detailCloseBtn" aria-label="Close detail panel">✕</button>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-row"><span class="detail-lbl">Location</span><span class="detail-val"
+          id="detailCoords">—</span></div>
+      <div class="detail-row" style="display:none;"><span class="detail-lbl">Latitude</span><span class="detail-val"
+          id="detailLat">—</span></div>
+      <div class="detail-row" style="display:none;"><span class="detail-lbl">Longitude</span><span class="detail-val"
+          id="detailLng">—</span></div>
+      <div class="detail-row"><span class="detail-lbl">Discovered</span><span class="detail-val" id="detailDate">—</span>
+      </div>
+      <div class="detail-notes-lbl">Why I saved it</div>
+      <div class="detail-notes" id="detailNotes"></div>
+    </div>
+
+    <div class="detail-actions">
+      <button class="btn-secondary" id="detailViewMapBtn">View on Map</button>
+      <button class="btn-secondary" id="detailEditBtn">Edit Discovery</button>
+      <button class="btn-secondary detail-danger" id="detailDeleteBtn">Delete Discovery</button>
+      <button class="btn-secondary" id="detailCopyBtn">Copy Coordinates</button>
+    </div>
+
+    <div class="detail-nav">
+      <button class="iconbtn" id="detailPrevBtn">← Previous</button>
+      <span class="detail-nav-pos" id="detailNavPos"></span>
+      <button class="iconbtn" id="detailNextBtn">Next →</button>
+    </div>
+
+    <div class="detail-nearby">
+      <div class="detail-nearby-lbl">NEARBY DISCOVERIES (within 5 km)</div>
+      <div id="detailNearbyList"></div>
+    </div>
+  </div>
+
+  <div id="compareOverlay" class="app-hidden"></div>
+  <div id="comparePanel" class="app-hidden" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <div class="compare-header">
+      <h2 id="compareTitle">Compare Two Places</h2>
+      <button class="detail-close" id="compareCloseBtn" aria-label="Close comparison panel">✕</button>
+    </div>
+
+    <div class="compare-selectors">
+      <div class="compare-select-group">
+        <label for="compareSelectA">Place A</label>
+        <select id="compareSelectA">
+          <option value="">Select a place…</option>
+        </select>
+      </div>
+      <div class="compare-select-group">
+        <label for="compareSelectB">Place B</label>
+        <select id="compareSelectB">
+          <option value="">Select a place…</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="compare-empty-msg" id="compareEmptyMsg">Select two saved places above to compare their details.</p>
+
+    <div id="compareBody" class="compare-body" style="display:none;">
+      <div class="compare-distance-banner" id="compareDistanceBanner"></div>
+
+      <div class="compare-grid">
+        <div class="compare-card card-a" id="compareCardA"></div>
+        <div class="compare-card card-b" id="compareCardB"></div>
+      </div>
+
+      <div class="compare-meta">
+        <div class="compare-meta-row" id="compareCategoryRow"></div>
+        <div class="compare-meta-row" id="compareDateRow"></div>
+      </div>
+    </div>
+
+    <div class="compare-actions">
+      <button class="btn-secondary" id="compareViewABtn" disabled>View A on Map</button>
+      <button class="btn-secondary" id="compareViewBBtn" disabled>View B on Map</button>
+      <button class="btn-secondary" id="compareSwapBtn" disabled>Swap Places</button>
+      <button class="btn-secondary" id="compareClearBtn" disabled>Clear Comparison</button>
+      <button class="btn-secondary" id="compareCloseBtn2">Close</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
